@@ -1,20 +1,20 @@
 import { describe, expect, it } from "vitest";
 
-import { assertDestinationAllowed } from "@/server/abuse/blocklist";
+import { assertUrlAllowed } from "@/server/abuse/blocklist";
 
-describe("assertDestinationAllowed", () => {
+describe("assertUrlAllowed", () => {
   it("allows public URLs", () => {
-    expect(() => assertDestinationAllowed("https://example.com")).not.toThrow();
+    expect(() => assertUrlAllowed("https://example.com")).not.toThrow();
   });
 
   it("blocks localhost destinations", () => {
-    expect(() => assertDestinationAllowed("http://localhost:3000")).toThrow(
+    expect(() => assertUrlAllowed("http://localhost:3000")).toThrow(
       "Destination URL is blocked",
     );
   });
 
   it("blocks private IPv4 destinations", () => {
-    expect(() => assertDestinationAllowed("http://192.168.0.1")).toThrow(
+    expect(() => assertUrlAllowed("http://192.168.0.1")).toThrow(
       "Destination URL is blocked",
     );
   });

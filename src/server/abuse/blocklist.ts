@@ -1,6 +1,6 @@
 const BLOCKED_DESTINATION_MESSAGE = "Destination URL is blocked";
 
-export function assertDestinationAllowed(destinationUrl: string): void {
+export function assertUrlAllowed(destinationUrl: string): void {
   let url: URL;
   try {
     url = new URL(destinationUrl);
