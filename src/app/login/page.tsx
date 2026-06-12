@@ -24,6 +24,9 @@ export default async function LoginPage({
   const redirectTo = pendingUrl
     ? `/dashboard?url=${encodeURIComponent(pendingUrl)}`
     : "/dashboard";
+  const forgotPasswordHref = pendingUrl
+    ? `/forgot-password?url=${encodeURIComponent(pendingUrl)}`
+    : "/forgot-password";
 
   return (
     <main className="flex min-h-screen flex-col bg-background text-foreground">
@@ -54,6 +57,14 @@ export default async function LoginPage({
             >
               Create account
             </Link>
+            <p className="mt-4 text-sm text-slate-500">
+              <Link
+                className="font-medium text-slate-700 underline-offset-4 hover:underline"
+                href={forgotPasswordHref}
+              >
+                Forgot password?
+              </Link>
+            </p>
           </aside>
         </div>
       </section>

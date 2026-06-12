@@ -10,7 +10,7 @@ export default defineConfig({
   },
   webServer: {
     command:
-      "DATABASE_URL='postgresql://postgres:postgres@localhost:5432/shorten_url?schema=public' NEXTAUTH_URL='http://localhost:3000' NEXTAUTH_SECRET='secret-secret-secret' APP_BASE_URL='http://localhost:3000' IP_HASH_SECRET='ip-secret-secret' npm run dev",
+      "DATABASE_URL='postgresql://postgres:postgres@localhost:5432/shorten_url?schema=public' NEXTAUTH_URL='http://localhost:3000' NEXTAUTH_SECRET='secret-secret-secret' APP_BASE_URL='http://localhost:3000' IP_HASH_SECRET='ip-secret-secret' npm run dev -- --hostname 127.0.0.1",
     url: "http://127.0.0.1:3000",
     reuseExistingServer: !process.env.CI,
   },
