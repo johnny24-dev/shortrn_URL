@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
+import { isJwtSessionFresh } from "@/lib/session-version";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
@@ -56,6 +57,7 @@ export const authOptions: NextAuthOptions = {
         return {
           id: user.id,
           email: user.email,
+          passwordChangedAt: user.passwordChangedAt?.toISOString() ?? null,
         };
       },
     }),
@@ -64,6 +66,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user?.id) {
         token.id = user.id;
+        token.passwordChangedAt = user.passwordChangedAt ?? null;
       }
 
       return token;
@@ -71,6 +74,7 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user && token.id) {
         session.user.id = token.id;
+        session.user.passwordChangedAt = token.passwordChangedAt ?? null;
       }
 
       return session;
@@ -79,7 +83,27 @@ export const authOptions: NextAuthOptions = {
 };
 
 export async function auth() {
-  return getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return session;
+  }
+
+  const currentUser = await prisma.user.findUnique({
+    where: { id: session.user.id },
+    select: { passwordChangedAt: true },
+  });
+
+  if (
+    !isJwtSessionFresh(
+      session.user.passwordChangedAt,
+      currentUser?.passwordChangedAt,
+    )
+  ) {
+    return null;
+  }
+
+  return session;
 }
 
 export async function requireUserId(): Promise<string> {

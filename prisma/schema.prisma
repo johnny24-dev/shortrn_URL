@@ -7,14 +7,16 @@ datasource db {
 }
 
 model User {
-  id           String      @id @default(cuid())
-  email        String      @unique
-  passwordHash String
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  links        ShortLink[]
-  accounts     Account[]
-  sessions     Session[]
+  id                String              @id @default(cuid())
+  email             String              @unique
+  passwordHash      String
+  passwordChangedAt DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  links             ShortLink[]
+  accounts          Account[]
+  sessions          Session[]
+  resetTokens       PasswordResetToken[]
 }
 
 model ShortLink {
@@ -95,4 +97,20 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id               String   @id @default(cuid())
+  userId           String
+  tokenHash        String   @unique
+  requestedAt      DateTime @default(now())
+  expiresAt        DateTime
+  usedAt           DateTime?
+  revokedAt        DateTime?
+  requestIpHash    String?
+  requestUserAgent String?
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@index([expiresAt])
 }

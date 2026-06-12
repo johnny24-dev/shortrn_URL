@@ -6,6 +6,10 @@ const envSchema = z.object({
   NEXTAUTH_SECRET: z.string().min(16),
   APP_BASE_URL: z.string().url(),
   IP_HASH_SECRET: z.string().min(16),
+  EMAIL_PROVIDER: z.enum(["resend", "postmark"]).optional(),
+  MAIL_FROM: z.string().min(3).optional(),
+  RESEND_API_KEY: z.string().optional(),
+  POSTMARK_API_TOKEN: z.string().optional(),
 });
 
 export type AppEnv = z.infer<typeof envSchema>;
