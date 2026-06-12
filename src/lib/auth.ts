@@ -94,10 +94,14 @@ export async function auth() {
     select: { passwordChangedAt: true },
   });
 
+  if (!currentUser) {
+    return null;
+  }
+
   if (
     !isJwtSessionFresh(
       session.user.passwordChangedAt,
-      currentUser?.passwordChangedAt,
+      currentUser.passwordChangedAt,
     )
   ) {
     return null;
