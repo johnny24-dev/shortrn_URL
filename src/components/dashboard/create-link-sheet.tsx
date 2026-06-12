@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +26,7 @@ export function CreateLinkSheet({
 }: CreateLinkSheetProps) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(initialOpen);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,18 +40,6 @@ export function CreateLinkSheet({
     }),
     [link],
   );
-
-  useEffect(() => {
-    if (initialOpen) {
-      setOpen(true);
-    }
-  }, [initialOpen]);
-
-  useEffect(() => {
-    if (!open) {
-      setError(null);
-    }
-  }, [open]);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -92,6 +80,7 @@ export function CreateLinkSheet({
       }
 
       formRef.current?.reset();
+      setError(null);
       setOpen(false);
       router.refresh();
     } finally {
@@ -101,7 +90,13 @@ export function CreateLinkSheet({
 
   return (
     <>
-      <Button type="button" onClick={() => setOpen(true)}>
+      <Button
+        type="button"
+        onClick={() => {
+          setError(null);
+          setOpen(true);
+        }}
+      >
         {triggerLabel}
       </Button>
       <Dialog
@@ -112,7 +107,10 @@ export function CreateLinkSheet({
             ? "Update the destination, slug, or expiration."
             : "Create a new short link for the current workspace."
         }
-        onClose={() => setOpen(false)}
+        onClose={() => {
+          setError(null);
+          setOpen(false);
+        }}
       >
         <form ref={formRef} className="grid gap-4" onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -164,7 +162,10 @@ export function CreateLinkSheet({
             <Button
               type="button"
               className="bg-slate-100 text-slate-900 hover:bg-slate-200"
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setError(null);
+                setOpen(false);
+              }}
             >
               Cancel
             </Button>
