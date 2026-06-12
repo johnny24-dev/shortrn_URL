@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { requireUserId } from "@/lib/auth";
+import { UnauthorizedError, requireUserId } from "@/lib/auth";
 import { deleteShortLink, updateShortLink } from "@/server/links/service";
 
 const updateSchema = z.object({
@@ -28,18 +28,18 @@ export async function PATCH(
   request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
-  const userId = await requireUserId();
-  const { id } = await context.params;
-  const parsed = updateSchema.safeParse(await request.json());
-
-  if (!parsed.success) {
-    return NextResponse.json(
-      { error: "Invalid link details" },
-      { status: 400 },
-    );
-  }
-
   try {
+    const userId = await requireUserId();
+    const { id } = await context.params;
+    const parsed = updateSchema.safeParse(await request.json());
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: "Invalid link details" },
+        { status: 400 },
+      );
+    }
+
     const link = await updateShortLink(id, userId, {
       title: parsed.data.title,
       description: parsed.data.description,
@@ -49,6 +49,10 @@ export async function PATCH(
 
     return NextResponse.json({ link });
   } catch (error) {
+    if (error instanceof UnauthorizedError) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     if (error instanceof Error && error.message === "Link not found") {
       return NextResponse.json({ error: error.message }, { status: 404 });
     }
@@ -68,13 +72,17 @@ export async function DELETE(
   _request: Request,
   context: { params: Promise<{ id: string }> },
 ) {
-  const userId = await requireUserId();
-  const { id } = await context.params;
-
   try {
+    const userId = await requireUserId();
+    const { id } = await context.params;
+
     await deleteShortLink(id, userId);
     return NextResponse.json({ ok: true });
   } catch (error) {
+    if (error instanceof UnauthorizedError) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     if (error instanceof Error && error.message === "Link not found") {
       return NextResponse.json({ error: error.message }, { status: 404 });
     }

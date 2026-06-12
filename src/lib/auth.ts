@@ -11,6 +11,13 @@ const credentialsSchema = z.object({
   password: z.string().min(8),
 });
 
+export class UnauthorizedError extends Error {
+  constructor() {
+    super("Unauthorized");
+    this.name = "UnauthorizedError";
+  }
+}
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
@@ -80,7 +87,7 @@ export async function requireUserId(): Promise<string> {
   const userId = session?.user?.id;
 
   if (!userId) {
-    throw new Error("Unauthorized");
+    throw new UnauthorizedError();
   }
 
   return userId;
