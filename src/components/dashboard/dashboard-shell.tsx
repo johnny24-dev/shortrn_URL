@@ -13,6 +13,7 @@ type DashboardShellProps = {
   insight: LinkInsight | null;
   searchQuery: string;
   statusFilter: string;
+  initialUrl: string;
 };
 
 export function DashboardShell({
@@ -22,6 +23,7 @@ export function DashboardShell({
   insight,
   searchQuery,
   statusFilter,
+  initialUrl,
 }: DashboardShellProps) {
   const queryString = new URLSearchParams();
   if (searchQuery) {
@@ -50,7 +52,12 @@ export function DashboardShell({
             >
               Account
             </Link>
-            <CreateLinkSheet mode="create" triggerLabel="Create link" />
+            <CreateLinkSheet
+              mode="create"
+              triggerLabel="Create link"
+              initialOpen={Boolean(initialUrl)}
+              initialUrl={initialUrl}
+            />
           </div>
         </header>
 

@@ -11,6 +11,7 @@ type DashboardSearchParams = Promise<{
   link?: string | string[];
   q?: string | string[];
   status?: string | string[];
+  url?: string | string[];
 }>;
 
 function readFirst(value: string | string[] | undefined): string {
@@ -83,6 +84,7 @@ export default async function DashboardPage({
   const searchQuery = readFirst(resolvedSearchParams.q);
   const statusFilter = readFirst(resolvedSearchParams.status) || "all";
   const selectedLinkId = readFirst(resolvedSearchParams.link) || null;
+  const initialUrl = readFirst(resolvedSearchParams.url);
 
   const [metrics, rawLinks] = await Promise.all([
     getDashboardMetrics(session.user.id),
@@ -105,6 +107,7 @@ export default async function DashboardPage({
       insight={insight}
       searchQuery={searchQuery}
       statusFilter={statusFilter}
+      initialUrl={initialUrl}
     />
   );
 }

@@ -7,9 +7,10 @@ import { useRouter } from "next/navigation";
 
 type AuthFormProps = {
   mode: "login" | "register";
+  redirectTo?: string;
 };
 
-export function AuthForm({ mode }: AuthFormProps) {
+export function AuthForm({ mode, redirectTo }: AuthFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -53,7 +54,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         return;
       }
 
-      router.push("/dashboard");
+      router.push(redirectTo ?? "/dashboard");
       router.refresh();
     } finally {
       setIsSubmitting(false);

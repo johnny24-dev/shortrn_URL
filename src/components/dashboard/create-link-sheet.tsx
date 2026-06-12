@@ -13,12 +13,16 @@ type CreateLinkSheetProps = {
   mode: "create" | "edit";
   triggerLabel: string;
   link?: DashboardLink | null;
+  initialOpen?: boolean;
+  initialUrl?: string;
 };
 
 export function CreateLinkSheet({
   mode,
   triggerLabel,
   link,
+  initialOpen = false,
+  initialUrl = "",
 }: CreateLinkSheetProps) {
   const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
@@ -36,6 +40,12 @@ export function CreateLinkSheet({
     }),
     [link],
   );
+
+  useEffect(() => {
+    if (initialOpen) {
+      setOpen(true);
+    }
+  }, [initialOpen]);
 
   useEffect(() => {
     if (!open) {
@@ -112,7 +122,7 @@ export function CreateLinkSheet({
                 name="originalUrl"
                 type="url"
                 placeholder="https://example.com/long-url"
-                defaultValue={defaults.originalUrl}
+                defaultValue={defaults.originalUrl || initialUrl}
                 required
               />
             </label>
