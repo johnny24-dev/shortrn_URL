@@ -4,8 +4,8 @@ import "./globals.css";
 import { AppProviders } from "@/components/app-providers";
 
 export const metadata: Metadata = {
-  title: "Shorten URL",
-  description: "Create short links with simple analytics.",
+  title: "Shortly",
+  description: "Create short links with powerful analytics.",
 };
 
 export default function RootLayout({

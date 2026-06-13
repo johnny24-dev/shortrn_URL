@@ -114,7 +114,7 @@ export function CreateLinkSheet({
       >
         <form ref={formRef} className="grid gap-4" onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2">
-            <label className="grid gap-2 text-sm font-medium text-slate-700 sm:col-span-2">
+            <label className="grid gap-2 text-sm font-bold text-[#111113] sm:col-span-2">
               Destination URL
               <Input
                 name="originalUrl"
@@ -124,7 +124,7 @@ export function CreateLinkSheet({
                 required
               />
             </label>
-            <label className="grid gap-2 text-sm font-medium text-slate-700">
+            <label className="grid gap-2 text-sm font-bold text-[#111113]">
               Custom slug
               <Input
                 name="customSlug"
@@ -132,7 +132,7 @@ export function CreateLinkSheet({
                 defaultValue={defaults.customSlug}
               />
             </label>
-            <label className="grid gap-2 text-sm font-medium text-slate-700">
+            <label className="grid gap-2 text-sm font-bold text-[#111113]">
               Expiration
               <Input
                 name="expiresAt"
@@ -140,7 +140,7 @@ export function CreateLinkSheet({
                 defaultValue={defaults.expiresAt}
               />
             </label>
-            <label className="grid gap-2 text-sm font-medium text-slate-700 sm:col-span-2">
+            <label className="grid gap-2 text-sm font-bold text-[#111113] sm:col-span-2">
               Title
               <Input
                 name="title"
@@ -148,7 +148,7 @@ export function CreateLinkSheet({
                 defaultValue={defaults.title}
               />
             </label>
-            <label className="grid gap-2 text-sm font-medium text-slate-700 sm:col-span-2">
+            <label className="grid gap-2 text-sm font-bold text-[#111113] sm:col-span-2">
               Description
               <Input
                 name="description"
@@ -159,16 +159,16 @@ export function CreateLinkSheet({
           </div>
           {error ? <p className="text-sm text-red-600">{error}</p> : null}
           <div className="flex items-center justify-end gap-3">
-            <Button
+            <button
               type="button"
-              className="bg-slate-100 text-slate-900 hover:bg-slate-200"
+              className="focus-ring inline-flex min-h-11 items-center justify-center rounded-md border border-[#e8e1d7] bg-white px-4 py-2 text-sm font-bold text-[#111113] transition hover:bg-[#fff4dc]"
               onClick={() => {
                 setError(null);
                 setOpen(false);
               }}
             >
               Cancel
-            </Button>
+            </button>
             <Button type="submit" disabled={isSubmitting}>
               {isSubmitting ? "Saving..." : mode === "edit" ? "Save" : "Create"}
             </Button>

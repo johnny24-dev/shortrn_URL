@@ -2,8 +2,6 @@
 
 import type { ReactNode } from "react";
 
-import { Button } from "@/components/ui/button";
-
 type DialogProps = {
   open: boolean;
   title: string;
@@ -24,22 +22,22 @@ export function Dialog({
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/50 p-4">
-      <div className="w-full max-w-2xl rounded-2xl border border-slate-200 bg-white shadow-2xl">
-        <div className="flex items-start justify-between gap-4 border-b border-slate-100 px-6 py-5">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-lg border border-[#e8e1d7] bg-white shadow-[0_28px_80px_rgb(17_17_19/0.22)]">
+        <div className="flex items-start justify-between gap-4 border-b border-[#eee8df] px-6 py-5">
           <div>
-            <h2 className="text-lg font-semibold text-slate-950">{title}</h2>
+            <h2 className="text-lg font-bold tracking-tight text-[#111113]">{title}</h2>
             {description ? (
-              <p className="mt-1 text-sm text-slate-500">{description}</p>
+              <p className="mt-1 text-sm leading-6 text-[#6d6a65]">{description}</p>
             ) : null}
           </div>
-          <Button
+          <button
             type="button"
             onClick={onClose}
-            className="bg-transparent px-3 text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+            className="focus-ring inline-flex min-h-10 items-center justify-center rounded-md px-3 text-sm font-bold text-[#6d6a65] transition hover:bg-[#f7f1e8] hover:text-[#111113]"
           >
             Close
-          </Button>
+          </button>
         </div>
         <div className="px-6 py-5">{children}</div>
       </div>

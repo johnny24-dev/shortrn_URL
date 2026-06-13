@@ -7,7 +7,7 @@ export function Input({
   return (
     <input
       {...props}
-      className={`min-h-11 rounded-md border border-slate-200 bg-white px-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-slate-400 ${className}`}
+      className={`focus-ring min-h-11 rounded-md border border-[#e8e1d7] bg-white px-3 text-sm text-[#111113] transition placeholder:text-[#9b948c] ${className}`}
     />
   );
 }

@@ -55,10 +55,10 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <form className="mx-auto grid w-full max-w-sm gap-4" onSubmit={handleSubmit}>
       <input name="token" type="hidden" value={token} />
-      <label className="grid gap-2 text-sm font-medium text-slate-700">
+      <label className="grid gap-2 text-sm font-bold text-[#111113]">
         New password
         <input
-          className="min-h-12 rounded-md border border-slate-200 px-4 text-base outline-none transition focus:border-slate-400"
+          className="focus-ring min-h-12 rounded-md border border-[#e8e1d7] bg-white px-4 text-base text-[#111113] transition"
           name="password"
           type="password"
           autoComplete="new-password"
@@ -66,10 +66,10 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           required
         />
       </label>
-      <label className="grid gap-2 text-sm font-medium text-slate-700">
+      <label className="grid gap-2 text-sm font-bold text-[#111113]">
         Confirm password
         <input
-          className="min-h-12 rounded-md border border-slate-200 px-4 text-base outline-none transition focus:border-slate-400"
+          className="focus-ring min-h-12 rounded-md border border-[#e8e1d7] bg-white px-4 text-base text-[#111113] transition"
           name="confirmPassword"
           type="password"
           autoComplete="new-password"
@@ -80,15 +80,15 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       {error ? <p className="text-sm text-red-600">{error}</p> : null}
       {message ? <p className="text-sm text-emerald-700">{message}</p> : null}
       <button
-        className="min-h-12 rounded-md bg-slate-950 px-5 text-base font-medium text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-400"
+        className="focus-ring min-h-12 rounded-md bg-[#e8950c] px-5 text-base font-bold text-white shadow-[0_14px_28px_rgb(232_149_12/0.22)] transition hover:bg-[#c57504] disabled:cursor-not-allowed disabled:bg-[#cfc7bb] disabled:shadow-none"
         type="submit"
         disabled={isSubmitting}
       >
         {isSubmitting ? "Updating..." : "Update password"}
       </button>
-      <p className="text-sm text-slate-500">
+      <p className="text-sm text-[#6d6a65]">
         <Link
-          className="font-medium text-slate-700 underline-offset-4 hover:underline"
+          className="font-bold text-[#111113] underline-offset-4 hover:underline"
           href="/login"
         >
           Back to log in

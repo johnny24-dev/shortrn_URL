@@ -1,18 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #fffdf8;
+  --foreground: #111113;
+  --surface: #ffffff;
+  --muted: #6d6a65;
+  --line: #e8e1d7;
+  --brand: #e8950c;
+  --brand-dark: #c57504;
+  --blue: #0f63f6;
+  --green: #0f8f55;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: Arial, Helvetica, sans-serif;
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: #ffe1a8;
+  color: #111113;
+}
+
+.surface-panel {
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 94%, var(--background));
+  box-shadow: 0 18px 50px rgb(17 17 19 / 0.07);
+}
+
+.focus-ring {
+  outline: none;
+}
+
+.focus-ring:focus-visible {
+  box-shadow: 0 0 0 4px rgb(232 149 12 / 0.18);
 }
